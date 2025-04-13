@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">Finance Tracker</string>
+    <string name="get_started_title">Welcome to Finance Tracker</string>
+    <string name="continue_button">Get Started</string>
+    <string name="dashboard_title">Your Finance Dashboard</string>
+    <string name="add_transaction">Add  Transaction</string>
+    <string name="category_analysis">Category-wise Analysis</string>
+    <string name="setup_budget">Setup Monthly Budget</string>
+    <string name="backup_restore">Backup / Restore Data</string>
+    <string name="title_hint">Title</string>
+    <string name="amount_hint">Amount</string>
+    <string name="save">Save </string>
+    <string name="delete">Delete Transaction</string>
+    <string name="transaction_saved">Transaction Saved</string>
+    <string name="transaction_deleted">Transaction deleted!</string>
+    <string name="invalid_input">Please enter valid title and amount</string>
+    <string name="category_summary">Category-wise Expense Summary</string>
+    <string name="no_data">No expenses to show.</string>
+    <string name="set_budget">Set Monthly Budget</string>
+    <string name="enter_budget">Enter amount (Rs.)</string>
+    <string name="budget_saved">Budget saved successfully!</string>
+    <string name="budget_warning">Warning: You are near or have exceeded your budget!</string>
+    <string name="current_spending">Your current spending: Rs. %1$.2f / %2$.2f</string>
+    <string name="export_data">Export Data</string>
+    <string name="import_data">Import Data</string>
+    <string name="invalid_budget">Please enter a valid budget amount.</string>
+    <string name="transaction_updated">transaction updated</string>
+    <string name="clear_all_transactions">Clear All Transactions</string>
+    <string name="sample_budget">Budget: Rs.0.00</string>
+    <string name="back">back</string>
+    <string name="nothing">nothing</string>
+    <string name="addtransaction">Add Transaction</string>
+    <string name="nothing_to_show">empty\n</string>
+    <string name="app_brief">Track your expenses and manage your finances effortlessly with FinanceTrack.</string>
+    <string name="financetrack">FinanceTrack</string>
+    <string name="data_manager">Data Manager</string>
+    <string name="manage_transactions">Manage Transactions</string>
+
+</resources>
