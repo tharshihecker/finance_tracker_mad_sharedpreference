@@ -38,7 +38,7 @@
         android:id="@+id/tvSummaryTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/category_summary"
+        android:text="@string/manage_transactions"
         android:textSize="24sp"
         android:textStyle="bold"
         android:textColor="@color/primaryText"
