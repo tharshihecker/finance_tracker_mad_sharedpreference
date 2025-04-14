@@ -129,7 +129,7 @@ class AddTransactionActivity : AppCompatActivity() {
             Log.d("AddTransactionActivity", "Total Expenses: $totalExpenses, Budget: $budget")
 
             if (totalExpenses > budget) {
-                val message = "Your total expenses (₹$totalExpenses) have exceeded your budget (₹$budget)!"
+                val message = "Your total expenses (Rs.$totalExpenses) have exceeded your budget (Rs.$budget)!"
                 checkAndSendNotification(message)
             }
 
