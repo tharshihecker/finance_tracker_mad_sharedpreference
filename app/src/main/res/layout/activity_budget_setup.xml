@@ -48,7 +48,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnBack" />
+        app:layout_constraintTop_toBottomOf="@+id/btnBack"
+        tools:ignore="TextSizeCheck" />
 
     <EditText
         android:id="@+id/etBudget"
@@ -71,7 +72,7 @@
 
     <Button
         android:id="@+id/btnSaveBudget"
-        android:layout_width="363dp"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/accent"
         android:text="@string/save"

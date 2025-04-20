@@ -129,9 +129,12 @@ class AddTransactionActivity : AppCompatActivity() {
             Log.d("AddTransactionActivity", "Total Expenses: $totalExpenses, Budget: $budget")
 
             if (totalExpenses > budget) {
-                val message = "Your total expenses (Rs.$totalExpenses) have exceeded your budget (Rs.$budget)!"
+                val exceededAmount = totalExpenses - budget
+                val message = "Your total expenses (Rs.$totalExpenses) have exceeded your budget (Rs.$budget)! " +
+                        "You have exceeded by Rs.$exceededAmount."
                 checkAndSendNotification(message)
             }
+
 
             finish()
         }
@@ -148,9 +151,12 @@ class AddTransactionActivity : AppCompatActivity() {
                 Log.d("AddTransactionActivity", "Total Expenses after deletion: $totalExpenses, Budget: $budget")
 
                 if (totalExpenses > budget) {
-                    val message = "Your total expenses (Rs.$totalExpenses) have exceeded your budget (Rs.$budget)!"
+                    val exceededAmount = totalExpenses - budget
+                    val message = "Your total expenses (Rs.$totalExpenses) have exceeded your budget (Rs.$budget)! " +
+                            "You have exceeded by Rs.$exceededAmount."
                     checkAndSendNotification(message)
                 }
+
 
                 finish()
             }

@@ -29,19 +29,17 @@ object NotificationHelper {
         // Ensure notification channel exists
         createNotificationChannel(context)
 
-        // Get the system notification manager
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        // Build the notification
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_notification) // Use your own drawable for the notification icon
+            .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle("Budget Alert")
-            .setContentText(message)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(message)) // ⭐ Shows full text
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setAutoCancel(true)
             .build()
 
-        // Send the notification with a unique ID
         manager.notify(1, notification)
     }
+
 }

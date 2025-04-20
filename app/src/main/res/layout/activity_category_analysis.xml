@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mainContainer"
@@ -8,7 +7,6 @@
     android:layout_height="match_parent"
     android:background="@color/backgroundColor">
 
-    <!-- Full‑screen background -->
     <ImageView
         android:id="@+id/imgBackground"
         android:layout_width="0dp"
@@ -16,12 +14,12 @@
         android:importantForAccessibility="no"
         android:scaleType="centerCrop"
         android:src="@drawable/m4"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ImageContrastCheck" />
 
-    <!-- Back Button -->
     <Button
         android:id="@+id/btnBack"
         android:layout_width="wrap_content"
@@ -34,7 +32,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 
-    <!-- Heading -->
     <TextView
         android:id="@+id/tvAnalysisTitle"
         android:layout_width="271dp"
@@ -46,19 +43,20 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnBack" />
+        app:layout_constraintTop_toBottomOf="@id/btnBack"
+        tools:ignore="TextSizeCheck" />
 
-    <!-- Scrollable analysis area -->
     <ScrollView
         android:id="@+id/scrollContainer"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
+        android:contentDescription="@string/nothing"
         android:fillViewport="true"
-        app:layout_constraintTop_toBottomOf="@id/tvAnalysisTitle"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvAnalysisTitle">
 
         <LinearLayout
             android:id="@+id/categoryAnalysisLayout"
@@ -67,18 +65,17 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Empty‑state message -->
             <TextView
                 android:id="@+id/tvNoDataCategory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
+                android:gravity="center"
                 android:text="@string/nothing_to_show"
                 android:textColor="@color/primaryText"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:gravity="center"
-                android:visibility="gone"/>
+                android:visibility="gone" />
         </LinearLayout>
     </ScrollView>
 
