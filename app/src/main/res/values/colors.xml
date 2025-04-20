@@ -1,7 +1,6 @@
 <resources>
     <color name="primaryText">#000000</color>
     <color name="backgroundColor">#F5F5F5</color>
-    <color name="primary">#6200EE</color>
     <color name="accent">#FF9800</color>
     <color name="warningColor">#FF0000</color>
     <color name="sucessColor">#388E3C</color>

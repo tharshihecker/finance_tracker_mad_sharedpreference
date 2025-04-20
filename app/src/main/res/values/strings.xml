@@ -35,5 +35,6 @@
     <string name="financetrack">FinanceTrack</string>
     <string name="data_manager">Data Manager</string>
     <string name="manage_transactions">Manage Transactions</string>
+    <string name="backup_brief">You can back up your transaction data to keep it safe. Use \'Export\' to save data and \'Import\' to restore it later.</string>
 
 </resources>

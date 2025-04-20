@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.app.R
 import com.example.app.models.Transaction
+import com.example.app.utils.NotificationHelper
 import com.example.app.utils.SharedPrefsHelper
 
 class TransactionHistory : AppCompatActivity() {
@@ -39,9 +40,17 @@ class TransactionHistory : AppCompatActivity() {
         clearAllButton.setOnClickListener {
             SharedPrefsHelper.clearAllTransactions(this)
             Toast.makeText(this, "All transactions deleted", Toast.LENGTH_SHORT).show()
+
+            // Show notification
+            NotificationHelper.sendBudgetAlert(
+                context = this,
+                message = "All transactions have been reset."
+            )
+
             transactions.clear()
             displayTransactions()
         }
+
 
         // Load and show
         transactions = SharedPrefsHelper.getTransactions(this).toMutableList()
