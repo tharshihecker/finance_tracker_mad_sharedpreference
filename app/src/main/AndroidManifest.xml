@@ -19,9 +19,11 @@
         android:theme="@style/Theme.App"
         tools:targetApi="31">
         <activity
-            android:name=".activities.TransactionHistory"
+            android:name=".activities.AddIncomeActivity"
             android:exported="false" />
-        <!-- Activity Declarations -->
+        <activity
+            android:name=".activities.TransactionHistory"
+            android:exported="false" /> <!-- Activity Declarations -->
         <activity
             android:name=".activities.DataBackupActivity"
             android:exported="false" />

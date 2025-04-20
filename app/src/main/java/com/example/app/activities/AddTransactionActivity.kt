@@ -12,8 +12,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.app.R
 import com.example.app.models.Transaction
-import com.example.app.utils.SharedPrefsHelper
 import com.example.app.utils.NotificationHelper
+import com.example.app.utils.SharedPrefsHelper
 
 class AddTransactionActivity : AppCompatActivity() {
 
@@ -44,7 +44,7 @@ class AddTransactionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_transaction)
 
-        // UI init
+        // UI Initialization
         tvCurrentBudget = findViewById(R.id.tvCurrentBudget)
         etTitle = findViewById(R.id.etTitle)
         etAmount = findViewById(R.id.etAmount)
@@ -59,16 +59,14 @@ class AddTransactionActivity : AppCompatActivity() {
             finish()
         }
 
-        // Spinner
+        // Spinner setup
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, categories)
         spinnerCategory.adapter = adapter
 
-        // Show budget
-        val currentBudget = SharedPrefsHelper.getBudget(this)
-        val totalExpenses = SharedPrefsHelper.getTransactions(this).sumOf { it.amount }
-        tvCurrentBudget.text = "Current Budget: Rs.$currentBudget\nTotal Spent: Rs.$totalExpenses"
+        // Budget and Expense info
+        updateBudgetAndExpenses()
 
-        // Editing mode
+        // Check if in edit mode
         isEditing = intent.getBooleanExtra("isEditing", false)
         transactionId = intent.getLongExtra("transactionId", -1L)
 
@@ -82,14 +80,17 @@ class AddTransactionActivity : AppCompatActivity() {
                 spinnerCategory.setSelection(categories.indexOf(txn.category))
 
                 val parts = txn.date.split("-") // Format: dd-MM-yyyy
-                datePicker.updateDate(parts[2].toInt(), parts[1].toInt() - 1, parts[0].toInt())
+                if (parts.size == 3) {
+                    datePicker.updateDate(parts[2].toInt(), parts[1].toInt() - 1, parts[0].toInt())
+                }
+
                 btnDelete.visibility = Button.VISIBLE
             }
         } else {
             btnDelete.visibility = Button.GONE
         }
 
-        // Save logic
+        // Save transaction
         btnSave.setOnClickListener {
             val title = etTitle.text.toString().trim()
             val amountText = etAmount.text.toString().trim()
@@ -123,47 +124,28 @@ class AddTransactionActivity : AppCompatActivity() {
                 Toast.makeText(this, getString(R.string.transaction_saved), Toast.LENGTH_SHORT).show()
             }
 
-            val totalExpenses = SharedPrefsHelper.getTransactions(this).sumOf { it.amount }
-            val budget = SharedPrefsHelper.getBudget(this)
-
-            Log.d("AddTransactionActivity", "Total Expenses: $totalExpenses, Budget: $budget")
-
-            if (totalExpenses > budget) {
-                val exceededAmount = totalExpenses - budget
-                val message = "Your total expenses (Rs.$totalExpenses) have exceeded your budget (Rs.$budget)! " +
-                        "You have exceeded by Rs.$exceededAmount."
-                checkAndSendNotification(message)
-            }
-
-
+            checkIfBudgetExceeded()
             finish()
         }
 
-        // Delete logic
+        // Delete transaction
         btnDelete.setOnClickListener {
             currentTransaction?.let {
                 SharedPrefsHelper.deleteTransaction(this, it)
                 Toast.makeText(this, getString(R.string.transaction_deleted), Toast.LENGTH_SHORT).show()
-
-                val totalExpenses = SharedPrefsHelper.getTransactions(this).sumOf { it.amount }
-                val budget = SharedPrefsHelper.getBudget(this)
-
-                Log.d("AddTransactionActivity", "Total Expenses after deletion: $totalExpenses, Budget: $budget")
-
-                if (totalExpenses > budget) {
-                    val exceededAmount = totalExpenses - budget
-                    val message = "Your total expenses (Rs.$totalExpenses) have exceeded your budget (Rs.$budget)! " +
-                            "You have exceeded by Rs.$exceededAmount."
-                    checkAndSendNotification(message)
-                }
-
-
+                checkIfBudgetExceeded()
                 finish()
             }
         }
 
-        // Request notification permission if needed
+        // Check notification permissions
         checkNotificationPermission()
+    }
+
+    private fun updateBudgetAndExpenses() {
+        val currentBudget = SharedPrefsHelper.getBudget(this)
+        val totalExpenses = SharedPrefsHelper.getExpenses(this)
+        tvCurrentBudget.text = "Current Budget: Rs.$currentBudget\nTotal Spent: Rs.$totalExpenses"
     }
 
     private fun checkNotificationPermission() {
@@ -174,6 +156,20 @@ class AddTransactionActivity : AppCompatActivity() {
             ) {
                 requestNotificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
             }
+        }
+    }
+
+    private fun checkIfBudgetExceeded() {
+        val totalExpenses = SharedPrefsHelper.getExpenses(this)
+        val budget = SharedPrefsHelper.getBudget(this)
+
+        updateBudgetAndExpenses() // Refresh the TextView display
+
+        if (totalExpenses > budget) {
+            val exceededAmount = totalExpenses - budget
+            val message = "Your total expenses (Rs.$totalExpenses) have exceeded your budget (Rs.$budget)! " +
+                    "You have exceeded by Rs.$exceededAmount."
+            checkAndSendNotification(message)
         }
     }
 

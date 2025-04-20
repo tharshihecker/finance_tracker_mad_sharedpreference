@@ -36,5 +36,15 @@
     <string name="data_manager">Data Manager</string>
     <string name="manage_transactions">Manage Transactions</string>
     <string name="backup_brief">You can back up your transaction data to keep it safe. Use \'Export\' to save data and \'Import\' to restore it later.</string>
+    <string name="add_income">add income\n</string>
+    <string name="current_income">current income\n</string>
+    <string name="setup_income">Setup Income</string>
+    <string name="expense_transactions">Expense Transactions</string>
+    <string name="add_incomes">Add Income</string>
+    <string name="total_income_rs_0">Total Income: Rs.0</string>
+    <string name="total_expenses_rs_0">Total Expenses: Rs.0</string>
+    <string name="budget_rs_0">Budget: Rs.0</string>
+    <string name="within_budget">Within Budget</string>
+    <string name="net_balance_rs_0">Net Balance: Rs.0</string>
 
 </resources>

@@ -8,7 +8,6 @@ import com.example.app.utils.NotificationHelper
 import com.example.app.utils.SharedPrefsHelper
 import android.content.Intent
 
-
 class BudgetSetupActivity : AppCompatActivity() {
 
     private lateinit var etBudget: EditText
@@ -23,7 +22,8 @@ class BudgetSetupActivity : AppCompatActivity() {
         etBudget = findViewById(R.id.etBudget)
         btnSaveBudget = findViewById(R.id.btnSaveBudget)
         tvBudgetStatus = findViewById(R.id.tvBudgetStatus)
-         btnBack = findViewById(R.id.btnBack)
+        btnBack = findViewById(R.id.btnBack)
+
         btnBack.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
@@ -47,7 +47,7 @@ class BudgetSetupActivity : AppCompatActivity() {
                     Toast.makeText(this, getString(R.string.budget_saved), Toast.LENGTH_SHORT).show()
                     showBudgetStatus(newBudget)
 
-                    val totalSpent = SharedPrefsHelper.getTransactions(this).sumOf { it.amount }
+                    val totalSpent = SharedPrefsHelper.getExpenses(this)
 
                     // Trigger alerts
                     when {
@@ -66,14 +66,12 @@ class BudgetSetupActivity : AppCompatActivity() {
                 Toast.makeText(this, getString(R.string.enter_budget), Toast.LENGTH_SHORT).show()
             }
         }
-
     }
 
     private fun showBudgetStatus(budget: Double) {
         if (budget <= 0) return
 
-        val transactions = SharedPrefsHelper.getTransactions(this)
-        val totalSpent = transactions.sumOf { it.amount }
+        val totalSpent = SharedPrefsHelper.getExpenses(this)
 
         val difference = totalSpent - budget
         val statusText: String
@@ -81,28 +79,22 @@ class BudgetSetupActivity : AppCompatActivity() {
 
         when {
             totalSpent > budget -> {
-                // Overspent
                 statusText = "You have spent Rs.${String.format("%.2f", totalSpent)} / Rs.$budget\n" +
                         "⚠️ Budget Exceeded by Rs.${String.format("%.2f", difference)}"
-                statusColor = getColor(R.color.warningColor) // Make sure you have this defined (red)
+                statusColor = getColor(R.color.warningColor)
             }
-
             totalSpent >= budget * 0.9 -> {
-                // Approaching budget
                 statusText = "You have spent Rs.${String.format("%.2f", totalSpent)} / Rs.$budget\n" +
                         "⚠️ Warning: You are about to reach your budget limit!"
-                statusColor = getColor(R.color.warningColor) // Orange/yellow
+                statusColor = getColor(R.color.warningColor)
             }
-
             else -> {
-                // Safe zone
                 statusText = "You have spent Rs.${String.format("%.2f", totalSpent)} / Rs.$budget"
-                statusColor = getColor(R.color.sucessColor) // Green
+                statusColor = getColor(R.color.sucessColor)
             }
         }
 
         tvBudgetStatus.text = statusText
         tvBudgetStatus.setTextColor(statusColor)
     }
-
 }

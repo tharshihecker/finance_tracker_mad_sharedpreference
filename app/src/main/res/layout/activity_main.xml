@@ -1,6 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="1dp">
@@ -11,33 +12,91 @@
         android:layout_height="match_parent"
         android:importantForAccessibility="no"
         android:scaleType="centerCrop"
-        android:src="@drawable/m10"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:src="@drawable/m4"
+        tools:layout_editor_absoluteX="-14dp"
+        tools:layout_editor_absoluteY="-57dp" />
 
-
+    <!-- Summary Strip -->
     <TextView
         android:id="@+id/tvDashboardTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="96dp"
         android:text="@string/dashboard_title"
         android:textColor="@color/primaryText"
         android:textSize="28sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/buttonContainer"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.56"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.032" />
+        app:layout_constraintTop_toTopOf="@+id/bgImage" />
+
+    <LinearLayout
+        android:id="@+id/summaryContainer"
+        android:layout_width="408dp"
+        android:layout_height="266dp"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvDashboardTitle">
+
+        <TextView
+            android:id="@+id/tvTotalIncome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/primaryText"
+            android:textAlignment="center"
+            android:text="@string/total_income_rs_0"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvTotalExpenses"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/primaryText"
+            android:textAlignment="center"
+            android:text="@string/total_expenses_rs_0"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvBudget"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/budget_rs_0"
+            android:textColor="@color/primaryText"
+            android:textAlignment="center"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvBudgetStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/within_budget"
+            android:textSize="22sp"
+            android:textColor="@color/primaryText"
+            android:textAlignment="center"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvNetBalance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/net_balance_rs_0"
+            android:textSize="22sp"
+            android:textColor="@color/primaryText"
+            android:textAlignment="center"
+            android:textStyle="bold" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/buttonContainer"
-        android:layout_width="332dp"
-        android:layout_height="327dp"
+        android:layout_width="407dp"
+        android:layout_height="382dp"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -55,12 +114,23 @@
             android:textStyle="bold" />
 
         <Button
+            android:id="@+id/btnSetupIncome"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/accent"
+            android:text="@string/add_incomes"
+            android:textColor="@color/primaryText"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Button
             android:id="@+id/btnAddTransaction"
             android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:backgroundTint="@color/accent"
-            android:text="@string/add_transaction"
+            android:text="@string/expense_transactions"
             android:textColor="@color/primaryText"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -97,6 +167,7 @@
             android:textColor="@color/primaryText"
             android:textSize="20sp"
             android:textStyle="bold" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

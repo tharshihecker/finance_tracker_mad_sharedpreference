@@ -123,23 +123,34 @@ class TransactionHistory : AppCompatActivity() {
 
                 val editBtn = Button(this).apply {
                     text = "Edit"
-                    textSize = 18f // Increase text size
-                    setTypeface(typeface, Typeface.BOLD) // Make text bold
-                    setPadding(24, 16, 24, 16) // Add padding for a bigger button
+                    textSize = 18f
+                    setTypeface(typeface, Typeface.BOLD)
+                    setPadding(24, 16, 24, 16)
+                    setTextColor(getColor(R.color.accent))// Add padding for a bigger button
+
                     setOnClickListener {
-                        Intent(this@TransactionHistory, AddTransactionActivity::class.java).also { intent ->
-                            intent.putExtra("isEditing", true)
-                            intent.putExtra("transactionId", txn.id)
-                            startActivity(intent)
+                        // Check if the transaction is income type
+                        val isIncome = txn.category.equals("income", ignoreCase = true)
+
+                        val intent = if (isIncome) {
+                            Intent(this@TransactionHistory, AddIncomeActivity::class.java)
+                        } else {
+                            Intent(this@TransactionHistory, AddTransactionActivity::class.java)
                         }
+
+                        intent.putExtra("isEditing", true)
+                        intent.putExtra("transactionId", txn.id)
+                        startActivity(intent)
                     }
                 }
+
 
                 val deleteBtn = Button(this).apply {
                     text = "Delete"
                     textSize = 18f // Increase text size
                     setTypeface(typeface, Typeface.BOLD) // Make text bold
-                    setPadding(24, 16, 24, 16) // Add padding for a bigger button
+                    setPadding(24, 16, 24, 16)
+                    setTextColor(getColor(R.color.accent))// Add padding for a bigger button
                     setOnClickListener {
                         transactions.remove(txn)
                         SharedPrefsHelper.saveAllTransactions(this@TransactionHistory, transactions)
