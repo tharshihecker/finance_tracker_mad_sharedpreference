@@ -24,7 +24,7 @@
         android:layout_marginTop="96dp"
         android:text="@string/dashboard_title"
         android:textColor="@color/primaryText"
-        android:textSize="28sp"
+        android:textSize="34sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,10 +33,11 @@
     <LinearLayout
         android:id="@+id/summaryContainer"
         android:layout_width="408dp"
-        android:layout_height="266dp"
+        android:layout_height="365dp"
+        android:background="@drawable/round_card_bg"
+        android:gravity="center"
         android:orientation="vertical"
         android:padding="16dp"
-        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvDashboardTitle">
@@ -45,20 +46,20 @@
             android:id="@+id/tvTotalIncome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/primaryText"
-            android:textAlignment="center"
             android:text="@string/total_income_rs_0"
-            android:textSize="22sp"
+            android:textAlignment="center"
+            android:textColor="@color/primaryText"
+            android:textSize="31sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvTotalExpenses"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/primaryText"
-            android:textAlignment="center"
             android:text="@string/total_expenses_rs_0"
-            android:textSize="22sp"
+            android:textAlignment="center"
+            android:textColor="@color/primaryText"
+            android:textSize="31sp"
             android:textStyle="bold" />
 
         <TextView
@@ -66,9 +67,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/budget_rs_0"
-            android:textColor="@color/primaryText"
             android:textAlignment="center"
-            android:textSize="22sp"
+            android:textColor="@color/primaryText"
+            android:textSize="31sp"
             android:textStyle="bold" />
 
         <TextView
@@ -76,9 +77,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/within_budget"
-            android:textSize="22sp"
-            android:textColor="@color/primaryText"
             android:textAlignment="center"
+            android:textColor="@color/primaryText"
+            android:textSize="31sp"
             android:textStyle="bold" />
 
         <TextView
@@ -86,9 +87,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/net_balance_rs_0"
-            android:textSize="22sp"
-            android:textColor="@color/primaryText"
             android:textAlignment="center"
+            android:textColor="@color/primaryText"
+            android:textSize="31sp"
             android:textStyle="bold" />
 
     </LinearLayout>
@@ -105,7 +106,7 @@
 
         <Button
             android:id="@+id/btnSetupBudget"
-            android:layout_width="320dp"
+            android:layout_width="310dp"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/accent"
             android:text="@string/setup_budget"
@@ -115,7 +116,7 @@
 
         <Button
             android:id="@+id/btnSetupIncome"
-            android:layout_width="320dp"
+            android:layout_width="310dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:backgroundTint="@color/accent"
@@ -126,7 +127,7 @@
 
         <Button
             android:id="@+id/btnAddTransaction"
-            android:layout_width="320dp"
+            android:layout_width="310dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:backgroundTint="@color/accent"
@@ -137,7 +138,7 @@
 
         <Button
             android:id="@+id/btnHistroy"
-            android:layout_width="320dp"
+            android:layout_width="310dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:backgroundTint="@color/accent"
@@ -148,7 +149,7 @@
 
         <Button
             android:id="@+id/btnCategoryAnalysis"
-            android:layout_width="320dp"
+            android:layout_width="310dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:backgroundTint="@color/accent"
@@ -159,7 +160,7 @@
 
         <Button
             android:id="@+id/btnBackupRestore"
-            android:layout_width="320dp"
+            android:layout_width="310dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:backgroundTint="@color/accent"

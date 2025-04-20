@@ -29,7 +29,7 @@
     <string name="sample_budget">Budget: Rs.0.00</string>
     <string name="back">back</string>
     <string name="nothing">nothing</string>
-    <string name="addtransaction">Add Transaction</string>
+    <string name="addtransaction">Add Expense Transaction</string>
     <string name="nothing_to_show">empty\n</string>
     <string name="app_brief">Track your expenses and manage your finances effortlessly with FinanceTrack.</string>
     <string name="financetrack">FinanceTrack</string>

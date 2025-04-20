@@ -2,6 +2,7 @@ package com.example.app.activities
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
@@ -53,19 +54,43 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        // --- Fetch Updated Data ---
         val income = SharedPrefsHelper.getIncome(this)
         val expense = SharedPrefsHelper.getExpenses(this)
         val budget = SharedPrefsHelper.getBudget(this)
         val net = income - expense
         val diff = budget - expense
-        val status = if (diff >= 0) "Saved Rs.$diff" else "Exceeded by Rs.${-diff}"
 
-        // --- Update Views ---
+        // --- Format budget status ---
+        val statusText: String
+        val statusColor: Int
+        if (diff >= 0) {
+            statusText = "Good! You saved Rs.${diff}"
+            statusColor = getColor(R.color.sucessColor)
+        } else {
+            statusText = "Over budget by Rs.${-diff}"
+            statusColor = getColor(R.color.warningColor)
+        }
+
+        tvBudgetStatus.text = statusText
+        tvBudgetStatus.setTextColor(statusColor)
+
+        // --- Set Net Balance ---
+        val netText = if (net >= 0) {
+            "Net Balance: Rs.$net"
+        } else {
+            "Net Loss: Rs.${-net}"  // Optional: you can also use "Overused: Rs.${-net}"
+        }
+
+        tvNetBalance.text = netText
+        tvNetBalance.setTextColor(
+            if (net >= 0) getColor(R.color.sucessColor)
+            else getColor(R.color.warningColor)
+        )
+
+        // --- Set other views ---
         tvTotalIncome.text = "Total Income: Rs.$income"
         tvTotalExpenses.text = "Total Expenses: Rs.$expense"
         tvBudget.text = "Budget: Rs.$budget"
-        tvBudgetStatus.text = status
-        tvNetBalance.text = "Net Balance: Rs.$net"
     }
+
 }
