@@ -163,12 +163,17 @@ class AddTransactionActivity : AppCompatActivity() {
         val totalExpenses = SharedPrefsHelper.getExpenses(this)
         val budget = SharedPrefsHelper.getBudget(this)
 
-        updateBudgetAndExpenses() // Refresh the TextView display
+        updateBudgetAndExpenses()
 
         if (totalExpenses > budget) {
             val exceededAmount = totalExpenses - budget
             val message = "Your total expenses (Rs.$totalExpenses) have exceeded your budget (Rs.$budget)! " +
                     "You have exceeded by Rs.$exceededAmount."
+            checkAndSendNotification(message)
+        } else if (totalExpenses >= 0.9 * budget) {
+            val remaining = budget - totalExpenses
+            val message = "Warning: You are about to reach your budget limit!\n" +
+                    "Only Rs.$remaining remaining from your budget of Rs.$budget."
             checkAndSendNotification(message)
         }
     }
