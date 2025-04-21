@@ -42,64 +42,62 @@ class CategoryAnalysisActivity : AppCompatActivity() {
     }
 
     private fun displayAnalysis() {
-        // Clear any old views (including the emptyText)
         summaryLayout.removeAllViews()
 
         if (transactions.isEmpty()) {
-            // Show empty state
-            emptyText.apply {
-                // Convert 32dp to px
-                val topPx = (32 * resources.displayMetrics.density).toInt()
-                layoutParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                ).apply { topMargin = topPx }
-                textSize = 20f
-                setTypeface(typeface, Typeface.BOLD)
-                gravity = Gravity.CENTER
-                visibility = View.VISIBLE
-            }
+            emptyText.visibility = View.VISIBLE
             summaryLayout.addView(emptyText)
             return
         }
 
-        // Group transactions by category
         val grouped = transactions.groupBy { it.category }
+
+        val colors = listOf(
+            R.color.maroon, R.color.categoryBlue,
+            R.color.sucessColor, R.color.categoryTeal,
+            R.color.categoryPurple, R.color.categoryOrange
+        )
+
+        var colorIndex = 0
+
         for ((category, txns) in grouped) {
-            // Category header
+            // Cycle through predefined colors
+            val categoryColor = resources.getColor(colors[colorIndex % colors.size], null)
+            colorIndex++
+
+            // Category Title
             val categoryTitle = TextView(this).apply {
                 text = "📂 $category"
                 textSize = 25f
-                setTypeface(typeface, Typeface.BOLD)
-                setTextColor(resources.getColor(R.color.primaryText, null))
-                // margin bottom
-                setPadding(0, 16, 0, 8)
+                setTypeface(null, Typeface.BOLD)
+                setTextColor(categoryColor)
+                setPadding(0, 32, 0, 8)
             }
             summaryLayout.addView(categoryTitle)
 
-            // List each txn
             var total = 0.0
-            txns.forEach { txn ->
+            for (txn in txns) {
                 val detail = TextView(this).apply {
                     text = "• Rs.${"%.2f".format(txn.amount)} on ${txn.date}"
-                    textSize = 20f
-                    setTypeface(typeface, Typeface.BOLD)
+                    textSize = 18f
+                    setTypeface(null, Typeface.BOLD) // <-- This makes the text bold
                     setTextColor(resources.getColor(R.color.primaryText, null))
                     setPadding(32, 4, 0, 4)
                 }
+
                 summaryLayout.addView(detail)
                 total += txn.amount
             }
 
-            // Total line
             val totalView = TextView(this).apply {
                 text = "➤ Total: Rs. ${"%.2f".format(total)}"
-                textSize = 20f
-                setTypeface(typeface, Typeface.BOLD)
-                setTextColor(resources.getColor(R.color.primaryText, null))
+                textSize = 18f
+                setTypeface(null, Typeface.BOLD)
+                setTextColor(categoryColor)
                 setPadding(32, 8, 0, 24)
             }
             summaryLayout.addView(totalView)
         }
     }
+
 }

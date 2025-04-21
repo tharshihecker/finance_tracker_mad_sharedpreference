@@ -59,6 +59,11 @@ class BudgetSetupActivity : AppCompatActivity() {
                         }
                     }
 
+                    // ✅ Navigate back to MainActivity
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+
                 } catch (e: NumberFormatException) {
                     Toast.makeText(this, getString(R.string.invalid_budget), Toast.LENGTH_SHORT).show()
                 }
@@ -66,6 +71,7 @@ class BudgetSetupActivity : AppCompatActivity() {
                 Toast.makeText(this, getString(R.string.enter_budget), Toast.LENGTH_SHORT).show()
             }
         }
+
     }
 
     private fun showBudgetStatus(budget: Double) {

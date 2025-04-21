@@ -145,8 +145,19 @@ class AddTransactionActivity : AppCompatActivity() {
     private fun updateBudgetAndExpenses() {
         val currentBudget = SharedPrefsHelper.getBudget(this)
         val totalExpenses = SharedPrefsHelper.getExpenses(this)
-        tvCurrentBudget.text = "Current Budget: Rs.$currentBudget\nTotal Spent: Rs.$totalExpenses"
+
+        val statusColor = if (totalExpenses > currentBudget) {
+            getColor(R.color.warningColor) // red
+        } else {
+            getColor(R.color.sucessColor)  // green
+        }
+
+        val statusText = "Current Budget: Rs.$currentBudget\nTotal Spent: Rs.$totalExpenses"
+
+        tvCurrentBudget.text = statusText
+        tvCurrentBudget.setTextColor(statusColor)
     }
+
 
     private fun checkNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {

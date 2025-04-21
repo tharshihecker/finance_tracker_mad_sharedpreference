@@ -118,6 +118,14 @@ class AddIncomeActivity : AppCompatActivity() {
     private fun updateIncomeAndExpenses() {
         val currentIncome = SharedPrefsHelper.getIncome(this)
         val totalExpenses = SharedPrefsHelper.getExpenses(this)
-        tvCurrentIncome.text = "Current Income: Rs.$currentIncome\nTotal Spent: Rs.$totalExpenses"
+
+        if (totalExpenses > currentIncome) {
+            tvCurrentIncome.setTextColor(resources.getColor(R.color.warningColor, null))  // Warning color
+            tvCurrentIncome.text = "Warning!\nSpent: Rs.$totalExpenses is more than Income: Rs.$currentIncome"
+        } else {
+            tvCurrentIncome.setTextColor(resources.getColor(R.color.sucessColor, null))  // Success color
+            tvCurrentIncome.text = "Current Income: Rs.$currentIncome\nTotal Spent: Rs.$totalExpenses"
+        }
     }
+
 }

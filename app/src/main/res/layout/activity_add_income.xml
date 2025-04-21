@@ -75,7 +75,7 @@
             android:padding="8dp"
             android:text="@string/current_income"
             android:textColor="@color/warningColor"
-            android:textSize="18sp"
+            android:textSize="25sp"
             android:textStyle="bold" />
 
         <!-- Title for the income -->

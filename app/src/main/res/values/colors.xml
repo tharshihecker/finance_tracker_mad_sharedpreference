@@ -4,5 +4,10 @@
     <color name="accent">#FF9800</color>
     <color name="warningColor">#FF0000</color>
     <color name="sucessColor">#388E3C</color>
+    <color name="categoryBlue">#00008B</color>       <!-- Dark Blue -->
+    <color name="categoryPurple">#7B1FA2</color>     <!-- Dark Purple -->
+    <color name="categoryOrange">#E64A19</color>     <!-- Deep Orange -->
+    <color name="categoryTeal">#00796B</color>
+    <color name="maroon">#800000</color>
 
 </resources>

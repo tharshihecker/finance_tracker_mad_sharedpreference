@@ -79,7 +79,7 @@
             android:padding="8dp"
             android:text="@string/sample_budget"
             android:textColor="@color/warningColor"
-            android:textSize="18sp"
+            android:textSize="23sp"
             android:textStyle="bold" />
 
         <EditText
