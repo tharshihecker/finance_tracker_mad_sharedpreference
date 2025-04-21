@@ -34,13 +34,13 @@
         android:id="@+id/summaryContainer"
         android:layout_width="408dp"
         android:layout_height="365dp"
-        android:background="@drawable/round_card_bg"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvDashboardTitle">
+        app:layout_constraintTop_toBottomOf="@id/tvDashboardTitle"
+        tools:ignore="TextSizeCheck">
 
         <TextView
             android:id="@+id/tvTotalIncome"
@@ -156,7 +156,8 @@
             android:text="@string/category_analysis"
             android:textColor="@color/primaryText"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:ignore="TextSizeCheck" />
 
         <Button
             android:id="@+id/btnBackupRestore"
