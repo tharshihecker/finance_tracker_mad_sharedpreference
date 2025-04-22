@@ -59,7 +59,6 @@ class BudgetSetupActivity : AppCompatActivity() {
                         }
                     }
 
-                    // ✅ Navigate back to MainActivity
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                     finish()

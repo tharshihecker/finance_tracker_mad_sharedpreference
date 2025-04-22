@@ -15,7 +15,7 @@ import com.example.app.models.Transaction
 import com.example.app.utils.NotificationHelper
 import com.example.app.utils.SharedPrefsHelper
 
-class TransactionHistory : AppCompatActivity() {
+class ManageTransactionActivity : AppCompatActivity() {
 
     private lateinit var summaryLayout: LinearLayout
     private lateinit var emptyText: TextView
@@ -25,7 +25,7 @@ class TransactionHistory : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_transaction_history)
+        setContentView(R.layout.activity_manage_transaction)
 
         // Bind views
         summaryLayout   = findViewById(R.id.categorySummaryLayout)
@@ -133,9 +133,9 @@ class TransactionHistory : AppCompatActivity() {
                         val isIncome = txn.category.equals("income", ignoreCase = true)
 
                         val intent = if (isIncome) {
-                            Intent(this@TransactionHistory, AddIncomeActivity::class.java)
+                            Intent(this@ManageTransactionActivity, AddIncomeActivity::class.java)
                         } else {
-                            Intent(this@TransactionHistory, AddTransactionActivity::class.java)
+                            Intent(this@ManageTransactionActivity, AddTransactionActivity::class.java)
                         }
 
                         intent.putExtra("isEditing", true)
@@ -153,8 +153,8 @@ class TransactionHistory : AppCompatActivity() {
                     setTextColor(getColor(R.color.accent))// Add padding for a bigger button
                     setOnClickListener {
                         transactions.remove(txn)
-                        SharedPrefsHelper.saveAllTransactions(this@TransactionHistory, transactions)
-                        Toast.makeText(this@TransactionHistory, "Transaction deleted", Toast.LENGTH_SHORT).show()
+                        SharedPrefsHelper.saveAllTransactions(this@ManageTransactionActivity, transactions)
+                        Toast.makeText(this@ManageTransactionActivity, "Transaction deleted", Toast.LENGTH_SHORT).show()
                         displayTransactions()
                     }
                 }

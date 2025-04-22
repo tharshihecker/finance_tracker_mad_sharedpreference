@@ -22,7 +22,7 @@
             android:name=".activities.AddIncomeActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.TransactionHistory"
+            android:name=".activities.ManageTransactionActivity"
             android:exported="false" /> <!-- Activity Declarations -->
         <activity
             android:name=".activities.DataBackupActivity"

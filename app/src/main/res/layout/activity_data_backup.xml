@@ -51,8 +51,8 @@
 
     <TextView
         android:id="@+id/backupInfo"
-        android:layout_width="403dp"
-        android:layout_height="240dp"
+        android:layout_width="416dp"
+        android:layout_height="277dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"

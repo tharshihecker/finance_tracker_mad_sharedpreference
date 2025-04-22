@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, DataBackupActivity::class.java))
         }
         findViewById<Button>(R.id.btnHistroy).setOnClickListener {
-            startActivity(Intent(this, TransactionHistory::class.java))
+            startActivity(Intent(this, ManageTransactionActivity::class.java))
         }
     }
 

@@ -35,23 +35,24 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Heading -->
+
+    <!-- Content Container -->
     <TextView
         android:id="@+id/tvHeading"
         android:layout_width="235dp"
         android:layout_height="70dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="48dp"
         android:text="@string/add_income"
         android:textAlignment="center"
         android:textColor="@color/primaryText"
         android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.253"
+        app:layout_constraintHorizontal_bias="0.181"
         app:layout_constraintStart_toEndOf="@+id/btnBack"
         app:layout_constraintTop_toTopOf="@+id/imgBackground"
         tools:ignore="TextSizeCheck" />
 
-    <!-- Content Container -->
     <LinearLayout
         android:layout_width="411dp"
         android:layout_height="wrap_content"
