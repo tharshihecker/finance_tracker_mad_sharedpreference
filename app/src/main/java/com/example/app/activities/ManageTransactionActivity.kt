@@ -22,6 +22,7 @@ class ManageTransactionActivity : AppCompatActivity() {
     private lateinit var btnBack: Button
     private lateinit var clearAllButton: Button
     private lateinit var transactions: MutableList<Transaction>
+    private var currencySymbol: String = "Rs." // Default currency
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,8 +52,10 @@ class ManageTransactionActivity : AppCompatActivity() {
             displayTransactions()
         }
 
+        // Load currency from SharedPreferences
+        currencySymbol = SharedPrefsHelper.getCurrency(this)
 
-        // Load and show
+        // Load and show transactions
         transactions = SharedPrefsHelper.getTransactions(this).toMutableList()
         displayTransactions()
     }
@@ -110,7 +113,7 @@ class ManageTransactionActivity : AppCompatActivity() {
 
                 // ↑–– Bigger, bold transaction details
                 val txnText = TextView(this).apply {
-                    text = "• ${txn.title} | Rs. ${"%.2f".format(txn.amount)} | ${txn.date}"
+                    text = "• ${txn.title} | $currencySymbol ${"%.2f".format(txn.amount)} | ${txn.date}"
                     textSize = 25f
                     setTypeface(typeface, Typeface.BOLD)
                     setTextColor(resources.getColor(R.color.primaryText, null))
@@ -126,7 +129,7 @@ class ManageTransactionActivity : AppCompatActivity() {
                     textSize = 18f
                     setTypeface(typeface, Typeface.BOLD)
                     setPadding(24, 16, 24, 16)
-                    setTextColor(getColor(R.color.accent))// Add padding for a bigger button
+                    setTextColor(getColor(R.color.accent)) // Add padding for a bigger button
 
                     setOnClickListener {
                         // Check if the transaction is income type
@@ -144,13 +147,12 @@ class ManageTransactionActivity : AppCompatActivity() {
                     }
                 }
 
-
                 val deleteBtn = Button(this).apply {
                     text = "Delete"
                     textSize = 18f // Increase text size
                     setTypeface(typeface, Typeface.BOLD) // Make text bold
                     setPadding(24, 16, 24, 16)
-                    setTextColor(getColor(R.color.accent))// Add padding for a bigger button
+                    setTextColor(getColor(R.color.accent)) // Add padding for a bigger button
                     setOnClickListener {
                         transactions.remove(txn)
                         SharedPrefsHelper.saveAllTransactions(this@ManageTransactionActivity, transactions)
@@ -158,7 +160,6 @@ class ManageTransactionActivity : AppCompatActivity() {
                         displayTransactions()
                     }
                 }
-
 
                 buttonLayout.addView(editBtn)
                 buttonLayout.addView(deleteBtn)

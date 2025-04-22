@@ -46,5 +46,11 @@
     <string name="budget_rs_0">Budget: Rs.0</string>
     <string name="within_budget">Within Budget</string>
     <string name="net_balance_rs_0">Net Balance: Rs.0</string>
+    <string name="select_currency_type">Select Currency Type</string>
+    <string-array name="currency_options">
+        <item>₨ (LKR)</item>
+        <item>₹ (INR)</item>
+        <item>$ (USD)</item>
+    </string-array>
 
 </resources>

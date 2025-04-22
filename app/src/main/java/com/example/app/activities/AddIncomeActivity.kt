@@ -21,6 +21,9 @@ class AddIncomeActivity : AppCompatActivity() {
     private var isEditing = false
     private var editingTransactionId: Long = -1L
 
+    // Define currency as a class-level property
+    private lateinit var currency: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_income)
@@ -32,6 +35,9 @@ class AddIncomeActivity : AppCompatActivity() {
         datePicker = findViewById(R.id.datePicker)
         btnSave = findViewById(R.id.btnSave)
         btnBack = findViewById(R.id.btnBack)
+
+        // Get the currency symbol
+        currency = SharedPrefsHelper.getCurrency(this)
 
         // Check if we're editing an existing transaction
         isEditing = intent.getBooleanExtra("isEditing", false)
@@ -121,11 +127,11 @@ class AddIncomeActivity : AppCompatActivity() {
 
         if (totalExpenses > currentIncome) {
             tvCurrentIncome.setTextColor(resources.getColor(R.color.warningColor, null))  // Warning color
-            tvCurrentIncome.text = "Warning!\nSpent: Rs.$totalExpenses is more than Income: Rs.$currentIncome"
+            tvCurrentIncome.text = "Warning!\nSpent: $currency$totalExpenses is more than Income: $currency$currentIncome"
         } else {
             tvCurrentIncome.setTextColor(resources.getColor(R.color.sucessColor, null))  // Success color
-            tvCurrentIncome.text = "Current Income: Rs.$currentIncome\nTotal Spent: Rs.$totalExpenses"
+            tvCurrentIncome.text = "Current Income: $currency$currentIncome\nTotal Spent: $currency$totalExpenses"
         }
     }
-
 }
+

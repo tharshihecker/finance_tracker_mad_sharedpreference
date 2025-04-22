@@ -9,18 +9,16 @@ object SharedPrefsHelper {
     private const val PREF_NAME = "finance_prefs"
     private const val KEY_TRANSACTIONS = "transactions"
     private const val KEY_BUDGET = "budget"
+    private const val KEY_CURRENCY = "currency"     // <— use this everywhere
 
     // Save a single transaction
     fun saveTransaction(context: Context, transaction: Transaction) {
         val prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
-        val list = getTransactions(context).toMutableList()
-        list.add(transaction)
-
-        val json = Gson().toJson(list)
-        prefs.edit().putString(KEY_TRANSACTIONS, json).apply()
+        val list = getTransactions(context).toMutableList().apply { add(transaction) }
+        prefs.edit().putString(KEY_TRANSACTIONS, Gson().toJson(list)).apply()
     }
 
-    // Get the list of transactions
+    // Get all transactions
     fun getTransactions(context: Context): List<Transaction> {
         val prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
         val json = prefs.getString(KEY_TRANSACTIONS, "[]")
@@ -28,68 +26,59 @@ object SharedPrefsHelper {
         return Gson().fromJson(json, type)
     }
 
-    // Save a budget value
-    fun saveBudget(context: Context, budget: Double) {
-        val prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
-        prefs.edit().putFloat(KEY_BUDGET, budget.toFloat()).apply()
-    }
-
-    // Get the budget value
-    fun getBudget(context: Context): Double {
-        val prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
-        return prefs.getFloat(KEY_BUDGET, 0f).toDouble()
-    }
-
-    // Update an existing transaction by its ID
-    fun updateTransaction(context: Context, updatedTransaction: Transaction) {
-        val prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
-        val transactions = getTransactions(context).toMutableList()
-
-        for (i in transactions.indices) {
-            if (transactions[i].id == updatedTransaction.id) {
-                transactions[i] = updatedTransaction
-                break
-            }
-        }
-
-        val json = Gson().toJson(transactions)
-        prefs.edit().putString(KEY_TRANSACTIONS, json).apply()
-    }
-
-    // Delete a transaction by its ID
-    fun deleteTransaction(context: Context, transactionToDelete: Transaction) {
-        val prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
-        val transactions = getTransactions(context).toMutableList()
-        transactions.removeIf { it.id == transactionToDelete.id }
-
-        val json = Gson().toJson(transactions)
-        prefs.edit().putString(KEY_TRANSACTIONS, json).apply()
-    }
-
-    // Save all transactions at once
+    // Overwrite the entire transaction list
     fun saveAllTransactions(context: Context, transactions: List<Transaction>) {
         val prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
-        val json = Gson().toJson(transactions)
-        prefs.edit().putString(KEY_TRANSACTIONS, json).apply()
+        prefs.edit().putString(KEY_TRANSACTIONS, Gson().toJson(transactions)).apply()
     }
 
-    // Clear all transactions
+    // Clear transactions
     fun clearAllTransactions(context: Context) {
         val prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
         prefs.edit().remove(KEY_TRANSACTIONS).apply()
     }
 
-    // ✅ Get total income
-    fun getIncome(context: Context): Double {
-        return getTransactions(context)
-            .filter { it.category == "Income" }
-            .sumOf { it.amount }
+    // Update one transaction by ID
+    fun updateTransaction(context: Context, updated: Transaction) {
+        val list = getTransactions(context).toMutableList()
+        val idx = list.indexOfFirst { it.id == updated.id }
+        if (idx != -1) list[idx] = updated
+        saveAllTransactions(context, list)
     }
 
-    // ✅ Get total expenses only (new method)
-    fun getExpenses(context: Context): Double {
-        return getTransactions(context)
-            .filter { it.category != "Income" }
+    // Delete one transaction by ID
+    fun deleteTransaction(context: Context, toDelete: Transaction) {
+        val list = getTransactions(context).toMutableList()
+        list.removeIf { it.id == toDelete.id }
+        saveAllTransactions(context, list)
+    }
+
+    // Budget
+    fun saveBudget(context: Context, budget: Double) {
+        val prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        prefs.edit().putFloat(KEY_BUDGET, budget.toFloat()).apply()
+    }
+    fun getBudget(context: Context): Double {
+        val prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        return prefs.getFloat(KEY_BUDGET, 0f).toDouble()
+    }
+
+    // Income / Expenses helpers
+    fun getIncome(context: Context): Double =
+        getTransactions(context).filter { it.category.equals("Income", true) }
             .sumOf { it.amount }
+
+    fun getExpenses(context: Context): Double =
+        getTransactions(context).filter { !it.category.equals("Income", true) }
+            .sumOf { it.amount }
+
+    // Currency
+    fun saveCurrency(context: Context, currency: String) {
+        val prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        prefs.edit().putString(KEY_CURRENCY, currency).apply()
+    }
+    fun getCurrency(context: Context): String {
+        val prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+        return prefs.getString(KEY_CURRENCY, "₨") ?: "₨"  // default ₨
     }
 }

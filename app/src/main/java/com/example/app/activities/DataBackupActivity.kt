@@ -10,44 +10,37 @@ import com.example.app.models.Transaction
 import com.example.app.utils.SharedPrefsHelper
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import java.io.*
+import java.io.IOException
 
 class DataBackupActivity : AppCompatActivity() {
 
     private val fileName = "transactions_backup.json"
-    private lateinit var btnBack: Button
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_data_backup)
 
-        val btnExport = findViewById<Button>(R.id.btnExport)
-        val btnImport = findViewById<Button>(R.id.btnImport)
-        btnBack = findViewById(R.id.btnBack)
-
-        btnBack.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+        findViewById<Button>(R.id.btnBack).setOnClickListener {
+            startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
-        btnExport.setOnClickListener {
-            exportData()
-        }
-
-        btnImport.setOnClickListener {
-            importData()
-        }
+        findViewById<Button>(R.id.btnExport).setOnClickListener { exportData() }
+        findViewById<Button>(R.id.btnImport).setOnClickListener { importData() }
     }
 
     private fun exportData() {
         val transactions = SharedPrefsHelper.getTransactions(this)
-        val json = Gson().toJson(transactions)
+        val currencySymbol = SharedPrefsHelper.getCurrency(this)
 
+        // Combine into a single map
+        val backupData = mapOf(
+            "transactions"   to transactions,
+            "currencySymbol" to currencySymbol
+        )
+
+        val json = Gson().toJson(backupData)
         try {
-            openFileOutput(fileName, MODE_PRIVATE).use {
-                it.write(json.toByteArray())
-            }
+            openFileOutput(fileName, MODE_PRIVATE).use { it.write(json.toByteArray()) }
             Toast.makeText(this, "Exported successfully!", Toast.LENGTH_SHORT).show()
         } catch (e: IOException) {
             e.printStackTrace()
@@ -57,14 +50,21 @@ class DataBackupActivity : AppCompatActivity() {
 
     private fun importData() {
         try {
-            val input = openFileInput(fileName)
-            val json = input.bufferedReader().use { it.readText() }
-            val type = object : TypeToken<List<Transaction>>() {}.type
-            val transactionList: List<Transaction> = Gson().fromJson(json, type)
+            val json = openFileInput(fileName).bufferedReader().use { it.readText() }
+            val type = object : TypeToken<Map<String, Any>>() {}.type
+            val backupData: Map<String, Any> = Gson().fromJson(json, type)
 
-            // Save to SharedPreferences
-            val prefs = getSharedPreferences("finance_prefs", MODE_PRIVATE)
-            prefs.edit().putString("transactions", Gson().toJson(transactionList)).apply()
+            // Transactions list
+            val transactionsJson = Gson().toJson(backupData["transactions"])
+            val listType = object : TypeToken<List<Transaction>>() {}.type
+            val transactionList: List<Transaction> = Gson().fromJson(transactionsJson, listType)
+
+            // Currency symbol
+            val currencySymbol = backupData["currencySymbol"] as? String ?: "₨"
+
+            // Save both via helper
+            SharedPrefsHelper.saveAllTransactions(this, transactionList)
+            SharedPrefsHelper.saveCurrency(this, currencySymbol)
 
             Toast.makeText(this, "Imported successfully!", Toast.LENGTH_SHORT).show()
         } catch (e: IOException) {

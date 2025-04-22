@@ -14,6 +14,9 @@ class BudgetSetupActivity : AppCompatActivity() {
     private lateinit var btnSaveBudget: Button
     private lateinit var tvBudgetStatus: TextView
     private lateinit var btnBack: Button
+    private lateinit var spinnerCurrency: Spinner
+
+    private val currencySymbols = arrayOf("₨", "₹", "$")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,6 +26,27 @@ class BudgetSetupActivity : AppCompatActivity() {
         btnSaveBudget = findViewById(R.id.btnSaveBudget)
         tvBudgetStatus = findViewById(R.id.tvBudgetStatus)
         btnBack = findViewById(R.id.btnBack)
+        spinnerCurrency = findViewById(R.id.spinnerCurrency)
+
+        // Setup spinner with currency symbols
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, currencySymbols)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerCurrency.adapter = adapter
+
+        // Load saved currency and set spinner selection
+        val savedCurrency = SharedPrefsHelper.getCurrency(this)
+        val index = currencySymbols.indexOf(savedCurrency)
+        if (index >= 0) spinnerCurrency.setSelection(index)
+
+        spinnerCurrency.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: android.view.View, position: Int, id: Long) {
+                val selectedCurrency = currencySymbols[position]
+                SharedPrefsHelper.saveCurrency(this@BudgetSetupActivity, selectedCurrency)
+                showBudgetStatus(SharedPrefsHelper.getBudget(this@BudgetSetupActivity))
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
 
         btnBack.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
@@ -30,7 +54,6 @@ class BudgetSetupActivity : AppCompatActivity() {
             finish()
         }
 
-        // Get and display the current budget if available
         val currentBudget = SharedPrefsHelper.getBudget(this)
         if (currentBudget > 0) {
             etBudget.setText(currentBudget.toString())
@@ -48,8 +71,6 @@ class BudgetSetupActivity : AppCompatActivity() {
                     showBudgetStatus(newBudget)
 
                     val totalSpent = SharedPrefsHelper.getExpenses(this)
-
-                    // Trigger alerts
                     when {
                         totalSpent > newBudget -> {
                             NotificationHelper.sendBudgetAlert(this, "You have exceeded your budget!")
@@ -70,31 +91,31 @@ class BudgetSetupActivity : AppCompatActivity() {
                 Toast.makeText(this, getString(R.string.enter_budget), Toast.LENGTH_SHORT).show()
             }
         }
-
     }
 
     private fun showBudgetStatus(budget: Double) {
         if (budget <= 0) return
 
         val totalSpent = SharedPrefsHelper.getExpenses(this)
-
         val difference = totalSpent - budget
+        val currency = SharedPrefsHelper.getCurrency(this)
+
         val statusText: String
         val statusColor: Int
 
         when {
             totalSpent > budget -> {
-                statusText = "You have spent Rs.${String.format("%.2f", totalSpent)} / Rs.$budget\n" +
-                        "⚠️ Budget Exceeded by Rs.${String.format("%.2f", difference)}"
+                statusText = "You have spent $currency${String.format("%.2f", totalSpent)} / $currency$budget\n" +
+                        "⚠️ Budget Exceeded by $currency${String.format("%.2f", difference)}"
                 statusColor = getColor(R.color.warningColor)
             }
             totalSpent >= budget * 0.9 -> {
-                statusText = "You have spent Rs.${String.format("%.2f", totalSpent)} / Rs.$budget\n" +
+                statusText = "You have spent $currency${String.format("%.2f", totalSpent)} / $currency$budget\n" +
                         "⚠️ Warning: You are about to reach your budget limit!"
                 statusColor = getColor(R.color.warningColor)
             }
             else -> {
-                statusText = "You have spent Rs.${String.format("%.2f", totalSpent)} / Rs.$budget"
+                statusText = "You have spent $currency${String.format("%.2f", totalSpent)} / $currency$budget"
                 statusColor = getColor(R.color.sucessColor)
             }
         }

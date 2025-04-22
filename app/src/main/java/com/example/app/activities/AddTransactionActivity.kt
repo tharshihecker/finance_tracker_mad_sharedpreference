@@ -14,6 +14,7 @@ import com.example.app.R
 import com.example.app.models.Transaction
 import com.example.app.utils.NotificationHelper
 import com.example.app.utils.SharedPrefsHelper
+import java.text.DecimalFormat
 
 class AddTransactionActivity : AppCompatActivity() {
 
@@ -145,6 +146,10 @@ class AddTransactionActivity : AppCompatActivity() {
     private fun updateBudgetAndExpenses() {
         val currentBudget = SharedPrefsHelper.getBudget(this)
         val totalExpenses = SharedPrefsHelper.getExpenses(this)
+        val currency = SharedPrefsHelper.getCurrency(this) // Retrieve currency symbol
+
+        // Use a DecimalFormat to format the amounts
+        val formatter = DecimalFormat("#,###.00")
 
         val statusColor = if (totalExpenses > currentBudget) {
             getColor(R.color.warningColor) // red
@@ -152,12 +157,13 @@ class AddTransactionActivity : AppCompatActivity() {
             getColor(R.color.sucessColor)  // green
         }
 
-        val statusText = "Current Budget: Rs.$currentBudget\nTotal Spent: Rs.$totalExpenses"
+        // Format the text with currency symbol
+        val statusText = "Current Budget: $currency${formatter.format(currentBudget)}\n" +
+                "Total Spent: $currency${formatter.format(totalExpenses)}"
 
         tvCurrentBudget.text = statusText
         tvCurrentBudget.setTextColor(statusColor)
     }
-
 
     private fun checkNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -173,18 +179,19 @@ class AddTransactionActivity : AppCompatActivity() {
     private fun checkIfBudgetExceeded() {
         val totalExpenses = SharedPrefsHelper.getExpenses(this)
         val budget = SharedPrefsHelper.getBudget(this)
+        val currency = SharedPrefsHelper.getCurrency(this) // Retrieve currency symbol
 
         updateBudgetAndExpenses()
 
         if (totalExpenses > budget) {
             val exceededAmount = totalExpenses - budget
-            val message = "Your total expenses (Rs.$totalExpenses) have exceeded your budget (Rs.$budget)! " +
-                    "You have exceeded by Rs.$exceededAmount."
+            val message = "Your total expenses ($currency${totalExpenses}) have exceeded your budget ($currency${budget})! " +
+                    "You have exceeded by $currency${exceededAmount}."
             checkAndSendNotification(message)
         } else if (totalExpenses >= 0.9 * budget) {
             val remaining = budget - totalExpenses
             val message = "Warning: You are about to reach your budget limit!\n" +
-                    "Only Rs.$remaining remaining from your budget of Rs.$budget."
+                    "Only $currency${remaining} remaining from your budget of $currency${budget}."
             checkAndSendNotification(message)
         }
     }

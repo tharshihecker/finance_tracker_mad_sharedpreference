@@ -11,13 +11,11 @@
         android:layout_height="0dp"
         android:contentDescription="@string/nothing"
         android:scaleType="centerCrop"
-        android:src="@drawable/m10"
+        android:src="@drawable/m4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnBack"
@@ -32,7 +30,7 @@
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.049"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -46,16 +44,36 @@
         android:textSize="32sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnBack"
+        app:layout_constraintTop_toBottomOf="@id/btnBack"
         tools:ignore="TextSizeCheck" />
+
+    <!-- Currency Spinner -->
+
+
+    <Spinner
+        android:id="@+id/spinnerCurrency"
+        android:layout_width="154dp"
+        android:layout_height="68dp"
+        android:layout_marginTop="304dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/spinner_border"
+        android:entries="@array/currency_options"
+        android:gravity="center"
+        android:padding="12dp"
+        android:popupBackground="@android:color/white"
+        android:spinnerMode="dropdown"
+        android:textAlignment="center"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
     <EditText
         android:id="@+id/etBudget"
         android:layout_width="378dp"
         android:layout_height="68dp"
-        android:layout_marginTop="416dp"
+        android:layout_marginTop="28dp"
         android:layout_marginEnd="24dp"
         android:backgroundTint="@color/primaryText"
         android:hint="@string/enter_budget"
@@ -68,7 +86,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+        app:layout_constraintTop_toBottomOf="@id/spinnerCurrency" />
 
     <Button
         android:id="@+id/btnSaveBudget"
@@ -81,21 +99,37 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etBudget"
-        app:layout_constraintVertical_bias="0.226" />
+        app:layout_constraintTop_toBottomOf="@id/etBudget"
+        app:layout_constraintVertical_bias="0.182" />
 
     <TextView
         android:id="@+id/tvBudgetStatus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
+        android:textAlignment="center"
         android:textColor="@color/warningColor"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btnSaveBudget" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="228dp"
+        android:layout_height="68dp"
+        android:layout_marginTop="304dp"
+        android:text="@string/select_currency_type"
+        android:textColor="@color/primaryText"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/spinnerCurrency"
+        app:layout_constraintHorizontal_bias="0.551"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+        tools:ignore="TextSizeCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

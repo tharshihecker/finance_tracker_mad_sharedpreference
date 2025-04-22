@@ -59,14 +59,16 @@ class MainActivity : AppCompatActivity() {
         val net = income - expense
         val diff = budget - expense
 
+        val currency = SharedPrefsHelper.getCurrency(this)
+
         // --- Format budget status ---
         val statusText: String
         val statusColor: Int
         if (diff >= 0) {
-            statusText = "\uD83C\uDF89 On Track!\nSaved Rs.$diff this month"
+            statusText = "\uD83C\uDF89 On Track!\nSaved $currency$diff this month"
             statusColor = getColor(R.color.sucessColor)
         } else {
-            statusText = "\uD83D\uDEA8 Budget Exceeded!\nOverspent by Rs.${-diff}"
+            statusText = "\uD83D\uDEA8 Budget Exceeded!\nOverspent by $currency${-diff}"
             statusColor = getColor(R.color.warningColor)
         }
 
@@ -75,9 +77,9 @@ class MainActivity : AppCompatActivity() {
 
         // --- Set Net Balance ---
         val netText = if (net >= 0) {
-            "\uD83D\uDCB0 Balance Left: Rs.$net"
+            "\uD83D\uDCB0 Balance Left: $currency$net"
         } else {
-            "\uD83D\uDCB8 Overused: Rs.${-net}"
+            "\uD83D\uDCB8 Overused: $currency${-net}"
         }
 
         tvNetBalance.text = netText
@@ -87,8 +89,9 @@ class MainActivity : AppCompatActivity() {
         )
 
         // --- Set other views with icons ---
-        tvTotalIncome.text = "\uD83D\uDCB0 Income: Rs.$income"
-        tvTotalExpenses.text = "\uD83D\uDCB8 Spent: Rs.$expense"
-        tvBudget.text = "\uD83D\uDCC5 Budget: Rs.$budget"
+        tvTotalIncome.text = "\uD83D\uDCB0 Income: $currency$income"
+        tvTotalExpenses.text = "\uD83D\uDCB8 Spent: $currency$expense"
+        tvBudget.text = "\uD83D\uDCC5 Budget: $currency$budget"
     }
+
 }

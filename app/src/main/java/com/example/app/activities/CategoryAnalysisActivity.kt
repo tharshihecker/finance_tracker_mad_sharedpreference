@@ -21,6 +21,7 @@ class CategoryAnalysisActivity : AppCompatActivity() {
     private lateinit var btnBack: Button
     private lateinit var scrollContainer: ScrollView
     private lateinit var transactions: List<Transaction>
+    private lateinit var currencySymbol: String // Variable to hold the currency symbol
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +37,9 @@ class CategoryAnalysisActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+
+        // Get the selected currency from SharedPreferences
+        currencySymbol = SharedPrefsHelper.getCurrency(this)
 
         transactions = SharedPrefsHelper.getTransactions(this)
         displayAnalysis()
@@ -77,10 +81,11 @@ class CategoryAnalysisActivity : AppCompatActivity() {
 
             var total = 0.0
             for (txn in txns) {
+                // Transaction Details: Title, Amount, and Date
                 val detail = TextView(this).apply {
-                    text = "• Rs.${"%.2f".format(txn.amount)} on ${txn.date}"
+                    text = "• ${txn.title}: $currencySymbol${"%.2f".format(txn.amount)} on ${txn.date}"
                     textSize = 18f
-                    setTypeface(null, Typeface.BOLD) // <-- This makes the text bold
+                    setTypeface(null, Typeface.BOLD)
                     setTextColor(resources.getColor(R.color.primaryText, null))
                     setPadding(32, 4, 0, 4)
                 }
@@ -89,8 +94,9 @@ class CategoryAnalysisActivity : AppCompatActivity() {
                 total += txn.amount
             }
 
+            // Display total for the category
             val totalView = TextView(this).apply {
-                text = "➤ Total: Rs. ${"%.2f".format(total)}"
+                text = "➤ Total: $currencySymbol ${"%.2f".format(total)}"
                 textSize = 18f
                 setTypeface(null, Typeface.BOLD)
                 setTextColor(categoryColor)
@@ -99,5 +105,6 @@ class CategoryAnalysisActivity : AppCompatActivity() {
             summaryLayout.addView(totalView)
         }
     }
+
 
 }
